@@ -1,0 +1,48 @@
+.container-copy {
+    --color: #a5a5b0;
+    --size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--size);
+    user-select: none;
+    fill: var(--color);
+    margin-left: 1em;
+}
+
+.container-copy .clipboard {
+    position: absolute;
+    animation: keyframes-fill .5s;
+}
+
+.container-copy .clipboard-check {
+    position: absolute;
+    display: none;
+    animation: keyframes-fill .5s;
+}
+
+.container-copy input:checked~.clipboard {
+    display: none;
+}
+
+.container-copy input:checked~.clipboard-check {
+    display: block;
+}
+
+.container-copy input {
+    opacity: 0;
+    cursor: pointer;
+}
+
+@keyframes keyframes-fill {
+    0% {
+        transform: rotate(0deg) scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotate(-10deg) scale(1.2);
+    }
+}

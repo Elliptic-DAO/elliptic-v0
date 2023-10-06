@@ -1,0 +1,120 @@
+.label {
+    font-weight: bold;
+}
+
+.label-contouring-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+    width: 20%;
+    border: none;
+}
+
+.label-contouring {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    width: 80%;
+    height: 60%
+}
+
+.vault-action {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    height: 40%;
+    border: none;
+    background-color: rgb(13 124 255);
+}
+
+.action-btn:hover {
+    cursor: pointer;
+    background-color: rgba(10, 105, 214);
+}
+
+.btn-inverted {
+    background-color: white;
+    border-radius: 10px;
+    color: rgb(13 124 255);
+    border: solid;
+    border-color: rgb(13 124 255);
+    border: solid;
+}
+
+.btn-inverted:hover {
+    cursor: pointer;
+    background-color: rgb(220, 236, 255);
+}
+
+.input-box {
+    display: flex;
+    background-color: #EEF1EF;
+    border-radius: 8px;
+    border: 1px solid;
+    box-shadow: rgba(0, 0, 0, 0.1) 8px 4px 8px;
+    height: 90%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.token-box {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.token-input {
+    width: 75%;
+    height: 90%;
+    border: none;
+    background-color: transparent;
+    font-size: x-large;
+}
+
+input:focus {
+    outline: none;
+    /* Or box-shadow: none; */
+}
+
+.max-division {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 100%
+}
+
+.token-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+}
+
+.user-token {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.token-value {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}

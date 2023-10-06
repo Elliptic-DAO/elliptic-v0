@@ -1,0 +1,91 @@
+.label {
+    font-weight: bold;
+}
+
+.label-box {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 40%;
+    border: 1px solid; 
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+.columns-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.vault-action {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.action-btn {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 8px; 
+    height: 40%; 
+    width: 100%;
+    border: none; 
+    background-color: rgb(13 124 255);
+                                
+}
+
+.input-box {
+    display: flex; 
+    background-color: #EEF1EF; 
+    border-radius: 8px; 
+    border: 1px transparent; 
+    box-shadow: rgba(0, 0, 0, 0.1) 8px 4px 8px; 
+    height: 90%; 
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.token-box {
+    display: flex; 
+    width: 100%; 
+    height: 100%; 
+    align-items: center; 
+    padding-left: 20px;
+}
+
+.token-input {
+    width: 75%; 
+    height: 90%; 
+    border: none; 
+    background-color: transparent; 
+    font-size: x-large;
+}
+
+.max-division {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 10%; 
+    height: 100%
+}
+
+.validate-box {
+    display: flex; 
+    justify-content: end; 
+    align-items: center; 
+    width: 15%; 
+    height: 100%; 
+    padding-right: 20px;
+}
+
+.token-logo {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 10%;
+}

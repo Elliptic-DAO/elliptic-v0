@@ -1,0 +1,36 @@
+footer {
+    width: 100%;
+    flex-shrink: 0;
+    background-color: #EEF1EF;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: inherit;
+    min-height: 130px;
+    position: absolute;
+    bottom: 0;
+}
+
+.icon {
+    height: 6vh
+}
+
+.links {
+    display: flex;
+    margin: 0px;
+    padding: 0px 10px;
+    list-style: none;
+}
+
+.links a {
+    margin-left: 4em;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    padding: 16px;
+}
+
+.links a:hover {
+    color: rgb(13 124 255);
+}

@@ -1,0 +1,14 @@
+{
+    "core": {
+        "ic": "gkd3b-iaaaa-aaaar-qab2a-cai",
+        "local": "gkd3b-iaaaa-aaaar-qab2a-cai"
+    },
+    "taler_ledger": {
+        "ic": "gnc5v-fyaaa-aaaar-qab2q-cai",
+        "local": "gnc5v-fyaaa-aaaar-qab2q-cai"
+    },
+    "ckbtc_ledger": {
+        "ic": "mxzaz-hqaaa-aaaar-qaada-cai",
+        "local": "mxzaz-hqaaa-aaaar-qaada-cai"
+    }
+}

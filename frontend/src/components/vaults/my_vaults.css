@@ -1,0 +1,140 @@
+.vault-box {
+    height: 350px;
+    border: 1px solid;
+    border-radius: 15px;
+    margin-left: 40px;
+    background-color: #0d09ff;
+    box-shadow: rgba(0, 0, 0, 0.1) 8px 4px 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-box {
+    margin-left: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    border: 1px solid;
+    height: 350px;
+
+}
+
+.create-box button {
+    background-color: rgb(13 124 255);
+    border-radius: 15px;
+
+}
+
+.create-box button:hover {
+    cursor: pointer;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+
+.open-vault-box {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: rgb(13 124 255);
+}
+
+.open-vault-box button:hover {
+    cursor: pointer;
+    background-color: rgba(10, 105, 214);
+}
+
+.open-vault-btn {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    border: transparent;
+    background-color: transparent;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.info-box {
+    height: 80%;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    height: 30%;
+}
+
+.token {
+    height: 16px;
+    width: 16px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.value {
+    margin-left: 10px;
+    font-size: large;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80%;
+    background: #EEF1EF;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.amount-box {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+.name-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.scroll-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.arrows {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+  
+  .arrows img {
+    width: 20px;
+    height: 20px;
+    transition: transform 1s ease-in-out;
+    align-items: center;
+    margin: 0px; 
+  }
+  

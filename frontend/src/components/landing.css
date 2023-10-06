@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-mobile {
+  height: 100vh;
+  background-color: white;
+  /* Adjust the background color as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.elliptic-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.section {
+  z-index: 2;
+}
+
+.title {
+  position: absolute;
+  top: 20vh;
+  left: 10vw;
+  font-size: 26px;
+  font-weight: bolder;
+}
+
+.title h1 {
+  margin: 0;
+
+}
+
+.sub-title {
+  position: absolute;
+  top: 45vh;
+  left: 10vw;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.doc-button {
+  position: absolute;
+  top: 70vh;
+  padding: 20px 20px;
+  font-size: 18px;
+  background-color: rgb(13 124 255);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.arrow {
+  position: absolute;
+  top: 80vh;
+  width: 10vw
+}
+
+.social-images {
+  margin-top: 2em;
+  position: absolute;
+  top: 50vh;
+  left: 10vw;
+}
+
+.social-images img {
+  width: 11vw;
+  margin-left: 1em;
+}
+
+.img-icp {
+  position: absolute;
+  padding-bottom: 1em;
+  right: 5vw;
+  bottom: -20vh;
+}
+
+.link-landing {
+  padding-bottom: 1em;
+  position: absolute;
+  left: 5vw;
+  bottom: -20vh;
+}
+
+.link-landing a:hover {
+  color: black;
+}
+
+.image {
+  position: fixed;
+  left: 40vw;
+  top: 0;
+  z-index: 1;
+  animation: float 10s ease-in-out infinite;
+}
+
+
+@keyframes floatckbtc {
+  0% {
+    transform: translateY(-5px) rotate(-50deg);
+  }
+
+  50% {
+    transform: translateY(15px) rotate(1deg);
+  }
+
+  100% {
+    transform: translateY(-5px) rotate(-50deg);
+  }
+}

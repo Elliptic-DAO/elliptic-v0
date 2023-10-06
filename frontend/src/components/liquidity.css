@@ -1,0 +1,56 @@
+.btn {
+    background-color: rgb(13 124 255);
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: rgba(10, 105, 214);
+}
+
+
+.btn-inverted {
+    background-color: white;
+    border-radius: 10px;
+    color: rgb(13 124 255);
+    border: solid;
+    border-color: rgb(13 124 255);
+    border: solid;
+}
+
+.btn-inverted:hover {
+    cursor: pointer;
+    background-color: rgb(220, 236, 255);
+}
+
+.liquidity {
+    border: 1px solid; 
+    border-radius: 5px; 
+    box-shadow: rgba(41, 49, 71, 0.1) 0px 8px 16px;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 250px;
+    justify-content: start;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.head-content {
+    display: flex;
+    align-items: center;
+    border-radius: 5px; 
+    background-color: #EEF1EF; 
+    padding: 1em; 
+    margin: 0; 
+    height: 10%;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+span {
+    margin-right: 6px;
+}
