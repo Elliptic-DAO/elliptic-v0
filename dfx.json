@@ -1,0 +1,42 @@
+{
+    "version": 1,
+    "dfx": "0.14.0",
+    "canisters": {
+        "protocol": {
+            "candid": "protocol.did",
+            "package": "protocol-canister",
+            "type": "rust",
+            "shrink": false
+        },
+        "taler_ledger": {
+            "candid": "ledger/ledger.did",
+            "type": "custom",
+            "wasm": "ledger/ledger_canister.wasm",
+            "shrink": false
+        },
+        "ckbtc_ledger": {
+            "candid": "ledger/ledger.did",
+            "type": "custom",
+            "wasm": "ledger/ledger_canister.wasm",
+            "shrink": false
+        }
+    },
+    "defaults": {
+        "build": {
+            "args": "",
+            "packtool": ""
+        }
+    },
+    "networks": {
+        "local": {
+            "bind": "127.0.0.1:8080",
+            "canister_http": {
+                "enabled": true
+            },
+            "replica": {
+                "subnet_type": "system"
+            },
+            "type": "ephemeral"
+        }
+    }
+}
