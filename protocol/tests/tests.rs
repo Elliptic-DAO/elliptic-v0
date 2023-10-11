@@ -451,6 +451,16 @@ impl EllipticSetup {
         .expect("token transfer failed")
     }
 
+    pub fn check_balance_tracking(&self) {
+        let ckbtc_balance =
+            self.balance_of(self.ckbtc_ledger_id, Principal::from(self.protocol_id));
+        let protocol_status = self.get_protocol_status().total_ckbtc_margin;
+        let liquidity_status = self
+            .get_liquidity_status(Principal::anonymous())
+            .total_available_returns;
+        assert_eq!(ckbtc_balance, protocol_status + liquidity_status);
+    }
+
     pub fn balance_of(&self, canister_id: CanisterId, from: impl Into<Account>) -> Nat {
         let from = from.into();
         Decode!(
@@ -767,6 +777,8 @@ fn basic_flow() {
 
     let vault_events = elliptic.get_vault_history(0);
     assert_eq!(vault_events.len(), 4);
+
+    elliptic.check_balance_tracking();
 }
 
 #[test]
@@ -877,6 +889,8 @@ fn liquidate_vault_no_liquidity_pool() {
     let total_borrowed_tal = vaults.iter().map(|v| v.borrowed_tal_amount).sum::<u64>();
     assert_eq!(total_ckbtc_margin, 6 * E8S);
     assert_eq!(total_borrowed_tal, maximum_borrowable_amount);
+
+    elliptic.check_balance_tracking();
 }
 
 #[test]
@@ -919,6 +933,34 @@ fn liquidate_vault_with_liquidity_pool() {
     let vaults = elliptic.get_vaults(elliptic.principals[0]);
     assert_eq!(vaults.len(), 1);
 
+    let first_vault_ckbtc_margin: CKBTC = CKBTC::from(3 * E8S);
+    elliptic
+        .approve_ckbtc_and_open_vault(elliptic.principals[3], first_vault_ckbtc_margin.to_u64())
+        .expect("failed to borrow");
+    elliptic.advance_time_and_tick(60);
+    let maximum_borrowable_amount_first_vault =
+        (first_vault_ckbtc_margin * INITIAL_BTC_RATE) / LIQUIDATION_COLLATERAL_RATIO;
+
+    let borrow_from_vault_result = elliptic.borrow_from_vault(
+        elliptic.principals[3],
+        VaultArg {
+            vault_id: 1,
+            amount: maximum_borrowable_amount_first_vault.to_u64(),
+        },
+    );
+    assert_matches!(borrow_from_vault_result, Ok(_));
+
+    elliptic.tal_approve_elliptic(elliptic.principals[3]);
+    assert_matches!(
+        elliptic.provide_liquidity(
+            elliptic.principals[3],
+            (maximum_borrowable_amount_first_vault - TAL_TRANSFER_FEE).to_u64()
+        ),
+        Ok(_)
+    );
+    let vaults = elliptic.get_vaults(elliptic.principals[3]);
+    assert_eq!(vaults.len(), 1);
+
     // Another user opens a vault at 40k$
 
     let current_btc_price = UsdBtc::from(dec!(40_000));
@@ -955,14 +997,18 @@ fn liquidate_vault_with_liquidity_pool() {
 
     let status = elliptic.get_liquidity_status(elliptic.principals[0]);
 
-    assert_eq!(status.available_liquidity_reward, E8S);
+    elliptic.check_balance_tracking();
+    assert_eq!(status.available_liquidity_reward, E8S / 2);
     assert_eq!(
-        status.available_liquidity_reward + protocol_status.total_ckbtc_margin,
-        4 * E8S
+        status.total_available_returns + protocol_status.total_ckbtc_margin,
+        7 * E8S
     );
     assert_eq!(
         status.liquidity_provided,
-        maximum_borrowable_amount_first_vault - TAL_TRANSFER_FEE - maximum_borrowable_amount
+        maximum_borrowable_amount_first_vault
+            - TAL_TRANSFER_FEE
+            - maximum_borrowable_amount / Ratio::from(dec!(2))
+            - 1.into()
     );
 }
 

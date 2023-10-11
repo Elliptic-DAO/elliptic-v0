@@ -127,12 +127,6 @@ pub fn check_vaults() {
                 < s.mode.get_minimum_liquidation_collateral_ratio()
             {
                 unhealthy_vaults.push(vault.clone());
-                log!(
-                    DEBUG,
-                    "[check_vaults] found unhealthy vault {:?} with collateral ratio: {}",
-                    vault.clone(),
-                    compute_collateral_ratio(vault, last_btc_rate)
-                );
             } else {
                 healthy_vault.push(vault.clone())
             }
@@ -144,33 +138,30 @@ pub fn check_vaults() {
         if vault.borrowed_tal_amount <= provided_liquidity {
             log!(
                 INFO,
-                "[check_vaults] liquidate vault to lp: {}",
-                vault.vault_id
+                "[check_vaults] liquidate vault {:?} to liquidity pool with liquidity: {} TAL",
+                vault.clone(),
+                provided_liquidity
             );
             mutate_state(|s| record_liquidate_vault(s, vault.vault_id, s.mode, last_btc_rate));
         } else if !healthy_vault.is_empty() {
             log!(
                 INFO,
-                "[check_vaults] redistribute vault to others: {}",
-                vault.vault_id
+                "[check_vaults] redistribute vault {:?} to all the other vaults.",
+                vault.clone()
             );
             mutate_state(|s| record_redistribute_vault(s, vault.vault_id));
         } else if read_state(|s| s.total_collateral_ratio) > Ratio::from(dec!(1.0)) {
             log!(
                     INFO,
-                    "[check_vaults] cannot liquidate vault {}, margin: {}, borrowed tal: {}, not changing mode as protocol is still solvable, will retry later.",
-                    vault.vault_id,
-                    vault.ckbtc_margin_amount,
-                    vault.borrowed_tal_amount
+                    "[check_vaults] cannot liquidate vault {:?} not changing mode as protocol is still solvable, will retry later.",
+                    vault.clone(),
                 );
         } else {
             log!(
-                    INFO,
-                    "[check_vaults] cannot liquidate vault {}, margin: {}, borrowed tal: {}, switching to read-only.",
-                    vault.vault_id,
-                    vault.ckbtc_margin_amount,
-                    vault.borrowed_tal_amount
-                );
+                INFO,
+                "[check_vaults] cannot liquidate vault {:?} switching to read-only.",
+                vault.clone(),
+            );
             mutate_state(|s| s.mode = Mode::ReadOnly);
         }
     }

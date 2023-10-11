@@ -339,6 +339,9 @@ impl State {
     }
 
     pub fn provide_liquidity(&mut self, amount: TAL, caller: Principal) {
+        if amount == 0 {
+            return;
+        }
         self.liquidity_pool
             .entry(caller)
             .and_modify(|curr| *curr += amount)
@@ -393,6 +396,7 @@ impl State {
             .get(&vault_id)
             .cloned()
             .expect("bug: vault not found");
+        assert!(self.total_provided_liquidity_amount() >= vault.borrowed_tal_amount);
         let vault_collateral_ratio = compute_collateral_ratio(&vault, btc_rate);
         let entries = if mode == Mode::Recovery && vault_collateral_ratio > MINIMUM_COLLATERAL_RATIO
         {
@@ -410,6 +414,10 @@ impl State {
                 }
                 None => ic_cdk::trap("liquidating unkown vault"),
             }
+            log!(
+                crate::DEBUG,
+                "[liquidate_vault] Do not liquidate totally as CR still above 110%",
+            );
             distribute_across_lps(
                 &self.liquidity_pool,
                 vault.borrowed_tal_amount,
@@ -434,9 +442,14 @@ impl State {
                     log!(
                         crate::DEBUG,
                         "[liquidate_vault] tal to debit: {}",
+                        entry.tal_to_debit,
+                    );
+                    assert!(
+                        *lp_entry.get() >= entry.tal_to_debit,
+                        "entry contains {} cannot substract {}",
+                        *lp_entry.get(),
                         entry.tal_to_debit
                     );
-                    assert!(*lp_entry.get() >= entry.tal_to_debit);
                     *lp_entry.get_mut() -= entry.tal_to_debit;
                     if *lp_entry.get() == 0 {
                         lp_entry.remove();
@@ -494,7 +507,7 @@ impl State {
             let vault = self.vault_id_to_vaults.get(&vault_ids[index]).unwrap();
 
             if vault.borrowed_tal_amount >= tal_amount_to_convert {
-                // We can convert every thing on this vault
+                // We can convert everything on this vault
                 let redeemable_ckbtc_amount: CKBTC = tal_amount_to_convert / current_btc_rate;
                 self.deduct_amount_from_vault(
                     redeemable_ckbtc_amount,
@@ -636,6 +649,7 @@ impl State {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct DistributeEntry {
     pub owner: Principal,
     pub ckbtc_reward: CKBTC,
@@ -658,6 +672,13 @@ pub(crate) fn distribute_across_lps(
         let share: Ratio = *provided_amount / total_provided_amount;
         let ckbtc_reward = ckbtc_margin_amount * share;
         let tal_to_debit = borrowed_tal_amount * share;
+        assert!(tal_to_debit <= *provided_amount);
+        log!(
+            crate::DEBUG,
+            "[distribute_across_lps] tal_to_debit: {tal_to_debit}, provided amount: {} for a reward of {ckbtc_reward} and owner: {}",
+            *provided_amount,
+            *owner
+        );
 
         result.push(DistributeEntry {
             owner: *owner,

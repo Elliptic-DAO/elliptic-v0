@@ -243,31 +243,24 @@ fn construct_liquidity_returns() -> String {
 }
 
 fn display_logs() -> String {
-    use crate::logs::{DEBUG_BUF, INFO_BUF, TRACE_XRC_BUF};
-    use ic_canister_log::{export, LogEntry};
+    use crate::logs::{Log, LogEntry};
 
-    fn display_entry(buf: &mut Vec<u8>, tag: &str, e: &LogEntry) {
+    fn display_entry(buf: &mut Vec<u8>, e: &LogEntry) {
         write!(
             buf,
-            "<tr><td>{}</td><td class=\"ts-class\">{}</td><td><code>{}:{}</code></td><td>{}</td></tr>",
-            tag, e.timestamp, e.file, e.line, e.message
+            "<tr><td>{:?}</td><td class=\"ts-class\">{}</td><td><code>{}:{}</code></td><td>{}</td></tr>",
+            e.priority, e.timestamp, e.file, e.line, e.message
         )
         .unwrap()
     }
 
-    let info = export(&INFO_BUF);
-    let debug = export(&DEBUG_BUF);
-    let trace_xrc = export(&TRACE_XRC_BUF);
+    let mut log: Log = Default::default();
+    log.push_all();
+    log.entries.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
 
     with_utf8_buffer(|buf| {
-        for e in info.iter() {
-            display_entry(buf, "info", e);
-        }
-        for e in debug.iter() {
-            display_entry(buf, "debug", e);
-        }
-        for e in trace_xrc.iter() {
-            display_entry(buf, "tracer_xrc", e);
+        for e in log.entries {
+            display_entry(buf, &e);
         }
     })
 }
