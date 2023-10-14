@@ -12,15 +12,15 @@ git checkout 423f17976070f91353a817ee234b68284094b6e0
 ```
 
 ```shell
-dfx build protocol
+dfx build protocol --network ic
 ```
 
 By compiling the code you can verify the Module Hash
 ```shell
-sha256sum ./.dfx/local/canisters/protocol/protocol.wasm
+sha256sum .dfx/ic/canisters/protocol/protocol.wasm
 ```
 
-Current deployed Module Hash: **a7ebfd7096ee5ef70072643773f7f7f6f0a44257ac941b6762f3440264c5f6d4**
+Current deployed Module Hash: **7923b3f93689450d7f216de3f3f6d8d5368488e254601cbfb2aae515635e1241**
 
 Note: To execute the following commands, locate your terminal in the current folder.
 
