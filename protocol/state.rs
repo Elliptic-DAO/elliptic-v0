@@ -437,13 +437,15 @@ impl State {
         };
         assert!(!entries.is_empty());
         for entry in entries {
+            log!(
+                crate::DEBUG,
+                "[liquidate_vault] debiting {} TAL to {} for {} ckBTC",
+                entry.tal_to_debit,
+                entry.owner,
+                entry.ckbtc_reward
+            );
             match self.liquidity_pool.entry(entry.owner) {
                 Occupied(mut lp_entry) => {
-                    log!(
-                        crate::DEBUG,
-                        "[liquidate_vault] tal to debit: {}",
-                        entry.tal_to_debit,
-                    );
                     assert!(
                         *lp_entry.get() >= entry.tal_to_debit,
                         "entry contains {} cannot substract {}",

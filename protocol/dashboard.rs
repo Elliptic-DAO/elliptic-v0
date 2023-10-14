@@ -207,6 +207,13 @@ fn construct_vault_table() -> String {
                 )
                 .unwrap();
             }
+            write!(
+                buf,
+                "<tr><td colspan='2' style='text-align: right;'><b>Total</b></td><td>{}</td><td>{}</td></tr>",
+                s.total_borrowed_tal_amount(),
+                s.total_ckbtc_margin_amount()
+            )
+            .unwrap();
         });
     })
 }
@@ -228,6 +235,12 @@ fn construct_liquidity_table() -> String {
                 )
                 .unwrap();
             }
+            write!(
+                buf,
+                "<tr><td colspan='1' style='text-align: right;'><b>Total Liquidity Provided</b></td><td>{}</td></tr>",
+                s.total_provided_liquidity_amount()
+            )
+            .unwrap();
         });
     })
 }
@@ -238,6 +251,12 @@ fn construct_liquidity_returns() -> String {
             for (principal, amount) in s.liquidity_returns.iter() {
                 write!(buf, "<tr><td>{}</td><td>{}</td></tr>", principal, (*amount)).unwrap();
             }
+            write!(
+                buf,
+                "<tr><td colspan='1' style='text-align: right;'><b>Total Rewards Available</b></td><td>{}</td></tr>",
+                s.total_available_returns()
+            )
+            .unwrap();
         })
     })
 }
