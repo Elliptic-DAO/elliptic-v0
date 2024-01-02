@@ -50,7 +50,7 @@ impl<T> CandidType for Amount<T> {
     where
         S: candid::types::Serializer,
     {
-        serializer.serialize_blob(&self.clone().to_array())
+        serializer.serialize_blob(&self.to_array())
     }
 }
 
